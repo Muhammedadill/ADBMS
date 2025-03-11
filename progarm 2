@@ -1,0 +1,218 @@
+2.  DML COMMANDS
+
+  a)  DML -INSERT
+
+                     Insert values in INVOICE database. 
+
+Value insertion................
+-> customer_id  10001, 10002, 10003 etc
+-> in_id   101,102, 103, etc
+-> name of city (calicut, ekm, tvm, etc..)
+-> some quantity should be less than 2
+-> product names....pen, pencil, soap, etc..
+-> some phone number should be null
+-> some price between 50 rs and 150 rs
+-> inv_date between 1st jan 2023 to 31st dec 2024
+-> some customers purchase more than 2 products
+
+
+
+mysql> insert into customer values(10001,'aswin','kerala','calicut',1818181818);
+Query OK, 1 row affected (0.10 sec)
+
+mysql> insert into customer(id,name,address,city) values(10002,'roshan','kerala','malappuram');
+Query OK, 1 row affected (0.09 sec)
+
+mysql> insert into customer(id,name,address,city) values(10003,'nabeel','kerala','kochi');
+Query OK, 1 row affected (0.10 sec)
+
+mysql> insert into customer values(10004,'jaseem','kerala','trivandrum',1919191919);
+Query OK, 1 row affected (0.11 sec)
+
+mysql> select * from customer;
++-------+--------+---------+------------+------------+
+| id    | name   | address | city       | ph_no      |
++-------+--------+---------+------------+------------+
+| 10001 | aswin  | kerala  | calicut    | 1818181818 |
+| 10002 | roshan | kerala  | malappuram |       NULL |
+| 10003 | nabeel | kerala  | kochi      |       NULL |
+| 10004 | jaseem | kerala  | trivandrum | 1919191919 |
++-------+--------+---------+------------+------------+
+4 rows in set (0.00 sec)
+
+mysql> insert into product values(1,'pen',30);
+Query OK, 1 row affected (0.14 sec)
+
+mysql> insert into product values(2,'pencil',80);
+Query OK, 1 row affected (0.13 sec)
+
+mysql> insert into product values(3,'soap',100);
+Query OK, 1 row affected (0.10 sec)
+
+mysql> insert into product values(4,'facewash',200);
+Query OK, 1 row affected (0.12 sec)
+
+mysql> select * from product;
++-----+----------+--------+
+| pid | pname    | price  |
++-----+----------+--------+
+|   1 | pen      |  30.00 |
+|   2 | pencil   |  80.00 |
+|   3 | soap     | 100.00 |
+|   4 | facewash | 200.00 |
++-----+----------+--------+
+4 rows in set (0.00 sec)
+
+mysql> insert into invoice_master values(101,10001,'2003-2-5');
+Query OK, 1 row affected (0.10 sec)
+
+mysql> insert into invoice_master values(102,10002,'2003-10-31');
+Query OK, 1 row affected (0.13 sec)
+
+mysql> insert into invoice_master values(103,10003,'2024-5-25');
+Query OK, 1 row affected (0.10 sec)
+
+mysql> insert into invoice_master values(104,10004,'2024-10-30');
+Query OK, 1 row affected (0.15 sec)
+
+mysql> select * from invoice_master;
++--------+---------+------------+
+| inv_id | cust_id | inv_date   |
++--------+---------+------------+
+|    101 |   10001 | 2023-10-30 |
+|    102 |   10002 | 2003-10-31 |
+|    103 |   10003 | 2024-05-25 |
+|    104 |   10004 | 2024-10-30 |
++--------+---------+------------+
+4 rows in set (0.00 sec)
+
+mysql> insert into invoice_item values(101,1,1);
+Query OK, 1 row affected (0.13 sec)
+
+mysql> insert into invoice_item values(101,2,5);
+Query OK, 1 row affected (0.12 sec)
+
+mysql> insert into invoice_item values(102,4,10);
+Query OK, 1 row affected (0.13 sec)
+
+mysql> insert into invoice_item values(103,3,6);
+Query OK, 1 row affected (0.10 sec)
+
+mysql> insert into invoice_item values(104,2,1);
+Query OK, 1 row affected (0.12 sec)
+
+mysql> insert into invoice_item values(104,1,8);
+Query OK, 1 row affected (0.13 sec)
+
+mysql> select * from invoice_item;
++--------+------+----------+
+| inv_id | pid  | quantity |
++--------+------+----------+
+|    101 |    1 |        1 |
+|    101 |    2 |        5 |
+|    102 |    4 |       10 |
+|    103 |    3 |        6 |
+|    104 |    2 |        1 |
+|    104 |    1 |        8 |
++--------+------+----------+
+6 rows in set (0.00 sec)
+
+
+
+b) DML - UPDATE 
+
+              1. Update the price of a particular product. 
+              2. Change the name of city ‘calicut’ to ‘kozhikode’ in the customer table. 
+              3. Update all prices with 2% of its original price. 
+              4. Change the address, city, phone number of a particular customer. 
+              5. Change the quantity of a purchased product of inv_id ‘101’
+
+
+mysql> update product set price=180 where pid=4;
+Query OK, 1 row affected (0.12 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> update customer set city='kozhikode' where id=10001;
+Query OK, 1 row affected (0.14 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> update product set price=30.6 where pid=1;
+Query OK, 1 row affected (0.10 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> update product set price=81.6 where pid=2;
+Query OK, 1 row affected (0.11 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> update product set price=102 where pid=3;
+Query OK, 1 row affected (0.10 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> update product set price=183.6 where pid=4;
+Query OK, 1 row affected (0.19 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> update customer set address='tamilnadu',city='chennai',ph_no=1234567890 where id=10004;
+Query OK, 1 row affected (0.11 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> update invoice_item set quantity=6 where inv_id=101;
+Query OK, 2 rows affected (0.11 sec)
+Rows matched: 2  Changed: 2  Warnings: 0
+
+
+c) DML - DELETE 
+
+              
+   
+              
+              
+1. Delete the record of customer id ‘10001’. 
+         
+mysql> delete from invoice_item where inv_id=101;
+Query OK, 2 rows affected (0.11 sec)
+
+mysql> delete from invoice_master where cust_id=10001;
+Query OK, 1 row affected (0.08 sec)
+
+mysql> delete from customer where id=10001;
+Query OK, 1 row affected (0.09 sec)
+
+2. Delete all purchase details of items its quantity less than 2.
+
+mysql> delete from invoice_item where quantity<2;
+Query OK, 2 rows affected (0.15 sec)
+
+
+3. Delete the purchase details of product ‘pen’ in the in_id ‘101’. 
+
+mysql> delete from invoice_item where pid=1 and inv_id=101;
+Query OK, 1 row affected (0.12 sec)
+
+4. Delete details of customer who does not have phone number.
+
+mysql> delete from invoice_item where inv_id=101 or inv_id=102 or inv_id=103;
+Query OK, 2 rows affected (0.16 sec)
+
+mysql> delete from invoice_master where cust_id=10002 or cust_id=10003;
+Query OK, 2 rows affected (0.13 sec)
+
+mysql> delete from customer where ph_no is null;
+Query OK, 2 rows affected (0.15 sec)
+
+5. Delete Invoice details of a particular customer(name)
+
+mysql> delete from invoice_item where inv_id=104;
+Query OK, 2 rows affected (0.12 sec)
+
+mysql> delete from invoice_master where cust_id=10004;
+Query OK, 1 row affected (0.10 sec)
+
+mysql> delete from customer where id=10004;
+Query OK, 1 row affected (0.09 sec)
+
+6. Delete the first two records of INVOICE_ITEM table.s
+
+mysql> delete from invoice_item where quantity limit 2;
+Query OK, 2 rows affected (0.13 sec)
+
