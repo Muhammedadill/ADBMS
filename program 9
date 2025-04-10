@@ -37,3 +37,4 @@ mysql> select pname,price_range(price) from product $
 +--------+--------------------+
 3 rows in set (0.00 sec)
 
+//VERIFIED
